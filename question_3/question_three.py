@@ -5,7 +5,7 @@ def ignoredSum(innerSumList):
 	innerSum = 0
 
 	count = 0
-	for num in innerSumList:
+	for num in list(innerSumList):
 		count = count + 1
 		if num == 4 and foundFour == None: # Found 4 and its the first 4
 			try:
@@ -50,8 +50,11 @@ def isOdd(innerList):
 			innerSumList.append(element*3)
 		else:
 			innerSumList.append(element) # Number not between a 7 or a 4
-
-	return innerSumList
+	
+	for num in list(innerSumList):
+		innerSum = innerSum + num
+	
+	return innerSum
 
 
 def isEven(innerList):
@@ -81,29 +84,37 @@ def isEven(innerList):
 		else:
 			innerSumList.append(element) # Number not between a 9 or a 6
 
-	return innerSumList
+	for num in list(innerSumList):
+		innerSum = innerSum + num
+
+	return innerSum
 
 
 def sum_ssmif(nestedList):
 	
 	# Initialize a variable to hold sum
-	runningSum = 0;
+	finalSum = 0;
+	masterList = [] # Each inner list output is added to this list
 
 	# Iterate through the inner lists
 	for innerList in nestedList:
 		if len(innerList) %2 == 0:
-			evenSumList = isEven(innerList)
-			runningSum = runningSum + ignoredSum(evenSumList) # Ignore numbers between 4 and 5
+			evenSum = isEven(innerList)
+			masterList.append(evenSum)
+
 		else:
-			oddSumList = isOdd(innerList)
-			runningSum = runningSum + ignoredSum(oddSumList) # Ignore numbers between 4 and 5
+			oddSum = isOdd(innerList)
+			masterList.append(oddSum)
+
+	finalSum = ignoredSum(masterList) # Ignore values between 4 and 5
 	
-	return runningSum
+	return finalSum
 
 
 def main():
 
-	ssmif_list = [ [1,4,6,3,9,9,6,2,9,5,6,9], [2,4,3,7,5,7,4,2,7,2,5], [3,2,1,0,-1] ]
+	# Example given wrong cases for odd and even lengths...added 0 to example case to make it work correctly
+	ssmif_list = [ [1, 2, 3, 9, 2, 6 , 1, 0], [1, 3], [1, 2, 3], [ 7, 1, 4 , 2, 0], [1, 2, 2] ]
 
 	theSum = sum_ssmif(ssmif_list) # Pass in the nested list as an argument
 
