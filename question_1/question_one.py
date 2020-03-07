@@ -1,4 +1,5 @@
 import math
+import datetime as dt
 from pandas_datareader import data
 
 
@@ -54,7 +55,7 @@ def Monthly_CVar(ticker, CI=0.05): # Default value of 0.05
 	oneDayCVaR = (1/num)*sumReturns # conditional value at return calculation
 	monthCVaR = math.sqrt(20) * oneDayCVaR # Assuming 20 business days in a month
 
-	return round(monthCVaR, 2)	
+	return round(monthCVaR, 2)
 
 
 def Monthly_Volatility(ticker):
@@ -81,7 +82,7 @@ def main():
 	ticker = "AAPL" # Specify stock here
 	CI = 0.05 # Specify optional Confidence Interval here
 
-	value_at_risk = Monthly_VaR(ticker) # Pass in a ticker (can add confidence interval if you choose)
+	value_at_risk = Monthly_VaR(ticker, CI) # Pass in a ticker (can add confidence interval if you choose)
 	conditional_value_at_risk = Monthly_CVar(ticker, CI) # Pass in a ticker and a confidence interval
 	volatility = Monthly_Volatility(ticker) # Pass in a ticker only
 
