@@ -1,57 +1,87 @@
+def ignoredSum(innerSumList):
+
+	# Initialized place holders
+	foundFour = None
+	innerSum = 0
+
+	count = 0
+	for num in innerSumList:
+		count = count + 1
+		if num == 4 and foundFour == None: # Found 4 and its the first 4
+			try:
+				innerSumList[count:].index(5) # Check if there is a 5 following the current 4
+				foundFour = True
+				continue # Ignore 4
+			except:
+				innerSum = innerSum + 4 # No 5 following the 4
+		elif num == 5 and foundFour:
+			foundFour = False
+			continue # Ignore 4
+		elif foundFour:
+			continue # Ignore num between 4 and 5
+		else:
+			innerSum = innerSum + num
+
+	return innerSum
+
+
 def isOdd(innerList):
 	
-	# Initialize inner sum with sum of the list
-	innerSum = sum(innerList)
-
 	# Initialize place holders
-	foundSeven = False
+	innerSum = 0
+	innerSumList = []
+	foundSeven = None
+
 	count = 0
-	
 	for element in innerList:
 		count = count + 1
-		if element == 7 and not foundSeven: # Found a 7 and its not the first 7
+		if element == 7 and foundSeven == None: # Found a 7 and its not the first 7
 			try:
 				innerList[count:].index(4) # Check if there is a 4 following the current 7
 				foundSeven = True
-				innerSum = innerSum + 14 # Tripled
+				innerSumList.append(21)
 			except:
-				break # If there is no following 4, stop looking for 7 values
+				continue # If there is no following 4, stop looking for 7 values
 		elif element == 4 and foundSeven: # Found a 4 after a 7
-			#foundSeven = False
-			innerSum = innerSum + 8 # Tripled
-			break # Stop looking for 7
+			foundSeven = False # Found 7 so 7 is not searched for
+			innerSumList.append(12)
+			continue # Do not try any further cases
 		elif foundSeven: # Between 7 and 4 (Found 7 knowing there is a 4 but did not find yet)
-			innerSum = innerSum + element + element # Tripled
+			innerSumList.append(element*3)
+		else:
+			innerSumList.append(element) # Number not between a 7 or a 4
 
-	return innerSum
+	return innerSumList
 
 
 def isEven(innerList):
-	
-	# Initialize inner sum with sum of the list
-	innerSum = sum(innerList)
 
 	# Initialize place holders
-	foundNine = False
+	innerSum = 0
+	innerSumList = []
+	foundNine = None
+
 	count = 0
-	
 	for element in innerList:
 		count = count + 1
-		if element == 9 and not foundNine: # Found a 9 and its not the first 9
+		if element == 9 and foundNine == None: # Found a 9 and its not the first 9
 			try:
 				innerList[count:].index(6) # Check if there is a 6 following the current 9
 				foundNine = True
-				innerSum = innerSum + 9
+				innerSumList.append(18)
 			except:
-				break # If there is no following 6, stop looking for 9 values
-		elif element == 6 and foundNine: # Found a 6 after a 9
-			#foundNine = False
-			innerSum = innerSum + 6
-			break # Stop looking for 9
-		elif foundNine: # Between 9 and 6 (Found 9 knowing there is a 6 but did not find yet)
-			innerSum = innerSum + element
+				continue # If there is no following 6, stop looking for 9 values
 
-	return innerSum
+		elif element == 6 and foundNine: # Found a 6 after a 9
+			foundNine = False # Found 9 so 9 is not searched for
+			innerSumList.append(12)
+			continue # Do not try any further cases
+		elif foundNine: # Between 9 and 6 (Found 9 knowing there is a 6 but did not find yet)
+			innerSumList.append(element*2)
+		else:
+			innerSumList.append(element) # Number not between a 9 or a 6
+
+	return innerSumList
 
 
 def sum_ssmif(nestedList):
@@ -62,16 +92,18 @@ def sum_ssmif(nestedList):
 	# Iterate through the inner lists
 	for innerList in nestedList:
 		if len(innerList) %2 == 0:
-			runningSum = runningSum + isEven(innerList)
+			evenSumList = isEven(innerList)
+			runningSum = runningSum + ignoredSum(evenSumList) # Ignore numbers between 4 and 5
 		else:
-			runningSum = runningSum + isOdd(innerList)
+			oddSumList = isOdd(innerList)
+			runningSum = runningSum + ignoredSum(oddSumList) # Ignore numbers between 4 and 5
 	
 	return runningSum
 
 
 def main():
 
-	ssmif_list = [ [1,2,6,3,9,9,6,2,9,1,6,2], [2,4,3,7,7,4,2,7,2], [3,2,1,0,-1] ]
+	ssmif_list = [ [1,4,6,3,9,9,6,2,9,5,6,9], [2,4,3,7,5,7,4,2,7,2,5], [3,2,1,0,-1] ]
 
 	theSum = sum_ssmif(ssmif_list) # Pass in the nested list as an argument
 
