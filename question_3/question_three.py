@@ -113,7 +113,7 @@ def sum_ssmif(nestedList):
 
 def main():
 
-	# Example given wrong cases for odd and even lengths...added 0 to example case to make it work correctly
+	# Example used wrong cases for odd and even lengths...added 0 to example case to make it work correctly
 	ssmif_list = [ [1, 2, 3, 9, 2, 6 , 1, 0], [1, 3], [1, 2, 3], [ 7, 1, 4 , 2, 0], [1, 2, 2] ]
 
 	theSum = sum_ssmif(ssmif_list) # Pass in the nested list as an argument
