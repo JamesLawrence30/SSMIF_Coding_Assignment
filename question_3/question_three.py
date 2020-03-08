@@ -98,7 +98,7 @@ def sum_ssmif(nestedList):
 
 	# Iterate through the inner lists
 	for innerList in nestedList:
-		if len(innerList) %2 == 0:
+		if len(innerList-1) %2 == 0: # len-1 is the max index
 			evenSum = isEven(innerList)
 			masterList.append(evenSum)
 
@@ -113,8 +113,8 @@ def sum_ssmif(nestedList):
 
 def main():
 
-	# Example used wrong cases for odd and even lengths...added 0 to example case to make it work correctly
-	ssmif_list = [ [1, 2, 3, 9, 2, 6 , 1, 0], [1, 3], [1, 2, 3], [ 7, 1, 4 , 2, 0], [1, 2, 2] ]
+	# Example case with answer of 41
+	ssmif_list = [ [1, 2, 3, 9, 2, 6 , 1], [1, 3], [1, 2, 3], [ 7, 1, 4 , 2], [1, 2, 2] ]
 
 	theSum = sum_ssmif(ssmif_list) # Pass in the nested list as an argument
 
